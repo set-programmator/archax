@@ -1,0 +1,9 @@
+{
+  "initialValue": "1000",
+  "numberOfCoins": 4,
+  "selectedCoin": "CoinB",
+  "coinBIncrementingValue": 2,
+  "numberOfCoinsBought": 3,
+  "numberOfCoinsSold": 2,
+  "ownedCoin": 1
+}
