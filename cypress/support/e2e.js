@@ -1,20 +1,15 @@
-// ***********************************************************
-// This example support/e2e.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+import 'cypress-mochawesome-reporter/register';
+import './commands';
 
-// Import commands.js using ES2015 syntax:
-import './commands'
+afterEach(function () {
+  const testName = this.currentTest.fullTitle().replace(/[:\/]/g, '');
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+  if (this.currentTest.state === 'passed') {
+    // Take screenshot for passed tests
+    cy.screenshot(`passed/${testName}`);
+  } else if (this.currentTest.state === 'failed') {
+    // Take screenshot for failed tests (Cypress does this automatically if screenshotOnRunFailure = true)
+    // But to be sure, you can also add:
+    cy.screenshot(`failed/${testName}`);
+  }
+});

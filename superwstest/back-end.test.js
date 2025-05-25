@@ -1,29 +1,19 @@
-const request = require('supertest');
-const WebSocket = require('ws');
-const app = require('../server'); // adjust this path to your Express app
+import request from 'superwstest';
 
-describe('REST and WebSocket Integration Test', () => {
-  it('should POST /purchase-coin and receive WebSocket message', (done) => {
-    const ws = new WebSocket('ws://localhost:3000'); // adjust port if needed
+describe('purchase-coin endpoint', () => {
+  const baseURL = 'http://localhost:3100';
 
-    ws.on('open', () => {
-      request(app)
-        .post('/purchase-coin')
-        .send({ coin: 'Bitcoin', amount: 1 })
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-        });
-    });
-
-    ws.on('message', (message) => {
-      const data = JSON.parse(message);
-      expect(data.type).toBe('coin-purchase-confirmation');
-      expect(data.status).toBe('success');
-      ws.close();
-      done();
-    });
-
-    ws.on('error', (err) => done(err));
+  it('should return a successful response payload after buying a coin', async () => {
+    await request(baseURL)
+      .post('/purchase-coin')
+      .send({ coinId: 2, amount: 1 }) // Buy 1 CoinA
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('success', true);
+        expect(Array.isArray(res.body.inventory)).toBe(true);
+        const coin = res.body.inventory.find((item) => item.coinId === 2);
+        expect(coin).toBeDefined();
+        expect(coin.amountOwned).toBeGreaterThan(0);
+      });
   });
 });

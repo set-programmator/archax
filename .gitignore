@@ -9,6 +9,8 @@ build/
 # dotenv environment variables
 .env
 .env.*
+.env.local
+.env.*.local
 
 # OS generated files
 .DS_Store
@@ -27,6 +29,7 @@ log/
 
 # Coverage directory
 coverage/
+.nyc_output/
 
 # Local runtime files
 .pids
@@ -40,7 +43,19 @@ coverage/
 # Cypress
 cypress/videos/
 cypress/screenshots/
+# To commit screenshots or videos, comment out the above two lines
 
 # Playwright
 test-results/
 playwright-report/
+
+# Temporary files
+*~
+*.tmp
+
+# Jest snapshots (if you use Jest)
+__snapshots__/
+
+# Lock files (uncomment if you want to ignore these, otherwise keep committed)
+# package-lock.json
+# yarn.lock
