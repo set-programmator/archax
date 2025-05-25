@@ -65,3 +65,4 @@ Additional Notes
 ## Screen Capture
 
 ![Screenshot of SDET Exercise](sdet-exercise.png)
+
